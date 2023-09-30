@@ -1,0 +1,42 @@
+DROP DATABASE IF EXISTS flixnet;
+
+CREATE DATABASE flixnet;
+
+CREATE TABLE flixnet.theme(
+    id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(50) NOT NULL
+);
+
+CREATE TABLE flixnet.tvshow(
+    id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    title VARCHAR(100) NOT NULL
+);
+
+CREATE TABLE flixnet.tvshow_theme(
+    tvshow_id TINYINT UNSIGNED NOT NULL,
+    theme_id TINYINT UNSIGNED NOT NULL,
+    FOREIGN KEY(tvshow_id) REFERENCES flixnet.tvshow(id),
+    FOREIGN KEY(theme_id) REFERENCES flixnet.theme(id),
+    PRIMARY KEY(tvshow_id, theme_id )
+);
+
+CREATE TABLE flixnet.season(
+    id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(100) NOT NULL UNIQUE,
+    number TINYINT UNSIGNED NOT NULL UNIQUE,
+    tvshow_id TINYINT UNSIGNED NOT NULL,
+    FOREIGN KEY(tvshow_id) REFERENCES flixnet.tvshow(id)
+);
+
+CREATE TABLE flixnet.episode(
+    id TINYINT UNSIGNED PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    title VARCHAR(100) NOT NULL UNIQUE,
+    number TINYINT UNSIGNED NOT NULL UNIQUE,
+    duration SMALLINT UNSIGNED NOT NULL,
+    season_id TINYINT UNSIGNED NOT NULL,
+    FOREIGN KEY(season_id) REFERENCES flixnet.
+    season(id)
+);
+
+
+
